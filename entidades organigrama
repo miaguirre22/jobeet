@@ -1,14 +1,18 @@
-cargo
+cargos
   id:integer
   nombre:string
+  id_nodo:integer
   
-raviol
-  id:integer
+nodos
+  id_nodo:integer
   nombre:string
   nivel:integer
+  id_cargo:integer
+  id_persona:integer
   
-persona
-  id:integer
+personas
+  id_persona:integer
   nombre:string
   apellido:string
+  id_nodo:integer
   
