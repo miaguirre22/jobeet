@@ -1,0 +1,14 @@
+cargo
+  id:integer
+  nombre:string
+  
+raviol
+  id:integer
+  nombre:string
+  nivel:integer
+  
+persona
+  id:integer
+  nombre:string
+  apellido:string
+  
