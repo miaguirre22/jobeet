@@ -9,6 +9,7 @@ nodos
   nivel:integer
   id_cargo:integer
   id_persona:integer
+  id_padre:integer
   
 personas
   id_persona:integer
