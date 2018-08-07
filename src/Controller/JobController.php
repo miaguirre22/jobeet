@@ -9,9 +9,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
 use App\Entity\Job;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
 
 class JobController extends AbstractController
 {
@@ -28,10 +28,8 @@ class JobController extends AbstractController
             'SELECT j FROM App:Job j WHERE j.createdAt > :date'
         )->setParameter('date', new \DateTime('-30 days'));
 
-        /**
         $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
-        */
-
+        
         return $this->render('job/list.html.twig', [
             'jobs' => $jobs,
         ]);
