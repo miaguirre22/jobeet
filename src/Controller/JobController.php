@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Job;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Reposity\CategoryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;    #para cuando modifique la funcion 'show'
 
 class JobController extends AbstractController
 {
@@ -24,14 +26,20 @@ class JobController extends AbstractController
      */
     public function list(EntityManagerInterface $em) : Response
     {
+        /*
         $query = $em->createQuery(
-            'SELECT j FROM App:Job j WHERE j.createdAt > :date'
-        )->setParameter('date', new \DateTime('-30 days'));
-
-        $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
+            'SELECT j FROM App:Job j WHERE j.expiresAt > :date'
+        )->setParameter('date', new \DateTime());
         
+        $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
+        */
+
+       /* $jobs = $em->getRepository(Job::class)->findActiveJobs();*/
+
+       $categories = $em->getRepository(Category::class)->findWithActiveJobs();
+
         return $this->render('job/list.html.twig', [
-            'jobs' => $jobs,
+            'categories' => $categories,
         ]);
     }
 
@@ -42,6 +50,8 @@ class JobController extends AbstractController
      			name="job.show",
                 methods="GET",
      			requirements={"id" = "\d+"})
+     *
+     * @Entity("job", expr="repository.findActiveJob(id)")
      *
      * @param Job $job
      *
