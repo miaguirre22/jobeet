@@ -8,11 +8,11 @@ use App\Entity\Job;
 class JobRepository extends EntityRepository
 {
 	/**
-     * @param int $id			#|null $categoryId
+     * @param int $id
      *
-     * @return Job|null 		#Job[]
+     * @return Job|null
      */
-    public function findActiveJobs(int $id)			#(int $categoryId = null)
+    public function findActiveJobs(int $id)
     {
         /*
         $qb = $this->createQueryBuilder('j')
