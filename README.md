@@ -1,46 +1,77 @@
-
+JOBEET
 REPO GitHub: https://github.com/frdepiaggio/jobeet.git Despues de Clonar:
 
 INSTALAR DOCKER CE INSTALAR DOCKER COMPOSE
 
-Comandos: sudo docker-compose up -d
+	Comandos: INICIAR DOCKER POR PRIMERA VEZ
 
-sudo docker-compose ps
+	sudo docker-compose up -d
 
-sudo docker-compose exec php-fpm bash
+VER ESTADO DEL DOCKER COMPOSE
 
-composer create-project symfony/website-skeleton:4.1 /tmp/jobeet/ cp -aR /tmp/jobeet/. . exit; sudo chown -R $USER:$USER .
+	sudo docker-compose ps
 
-En el .env poner: DATABASE_URL=mysql://user:password@mysql:3306/jobeet composer require knplabs/knp-paginator-bundle
+EJECUTAR EL CONTENEDOR PHP
 
-bin/console doctrine:database:create --if-not-exists
+	sudo docker-compose exec php-fpm bash
 
-bin/console doctrine:schema:validate
+CREAR EL PROYECTO SYMFONY
 
-composer require doctrine/doctrine-migrations-bundle
+	composer create-project symfony/website-skeleton:4.1 /tmp/jobeet/
+	cp -aR /tmp/jobeet/. .
+	exit;
+	sudo chown -R $USER:$USER .
 
-bin/console doctrine:migration:diff
+CONFIGURAR LA DATABASE En el .env poner:
 
-bin/console doctrine:migration:migrate
+	DATABASE_URL=mysql://user:password@mysql:3306/jobeet
+	composer require knplabs/knp-paginator-bundle
 
-composer require --dev doctrine/doctrine-fixtures-bundle
+CREAR BASE DE DATOS CON DOCTRINE
 
-bin/console doctrine:fixtures:load
+	bin/console doctrine:database:create --if-not-exists
 
-bin/console debug:router
+VALIDAR ESQUEMA DE LA DATABASE CON DOCTRINE
 
-composer require stof/doctrine-extensions-bundle
+	bin/console doctrine:schema:validate
 
-bin/console doctrine:migrations:diff
+INSTALAR PAQUETE DE MIGRACION DE DOCTRINE
 
-bin/console doctrine:schema:drop --force --full-database
+	composer require doctrine/doctrine-migrations-bundle
 
-bin/console doctrine:migration:migrate
+MIGRAR DATOS DE ENTITIES Y FIXTURES A LA DATABASE
 
-bin/console doctrine:fixtures:load
+	bin/console doctrine:migration:diff
 
-bin/console cache:clear
+	bin/console doctrine:migration:migrate
+
+	bin/console doctrine:fixtures:load
+
+VER ESTADOS DE RUTAS
+
+	bin/console debug:router
+
+INSTALAR stof PARA EXTENSIONES DE RUTAS (usado para las categorias en este caso)
+
+	composer require stof/doctrine-extensions-bundle
+
+SE VUELVE A MIGRAR TODO POR AGREGAR EL stof A LAS CATEGORIAS
+
+	bin/console doctrine:migrations:diff
+
+	bin/console doctrine:schema:drop --force --full-database
+
+	bin/console doctrine:migration:migrate
+
+	bin/console doctrine:fixtures:load
+
+BORRAR LA CACHE DE SYMFONY(IMPORTANTE)
+
+	bin/console cache:clear
+
+IMPORTANTE
 
 En config/packages/asset.yaml comentar json_manifest_path
+INSTALAR EL SIGUIENTE BUNDLE
 
-composer require friendsofsymfony/user-bundle "~2.1"
+	composer require friendsofsymfony/user-bundle "~2.1"
