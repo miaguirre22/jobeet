@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Jobs in the {{ category.name }} category
+{% endblock %}
+
+{% block body %}
+    <h4>{{ category.name }}</h4>
+
+    <!--{% include 'job/table.html.twig' with {'jobs': category.activeJobs} only %}-->
+    {% include 'job/table.html.twig' with {'jobs': activeJobs} only %}
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(activeJobs) }}
+    </div>
+
+    <!--
+    <table class="table text-center">
+        <thead>
+        <tr>
+            <th class="active text-center">City</th>
+            <th class="active text-center">Position</th>
+            <th class="active text-center">Company</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for job in category.activeJobs %}
+            <tr>
+                <td>{{ job.location }}</td>
+                <td>
+                    <a href="{{ path('job.show', {id: job.id}) }}">
+                        {{ job.position }}
+                    </a>
+                </td>
+                <td>{{ job.company }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    -->
+{% endblock %}

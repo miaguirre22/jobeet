@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    max_jobs_on_homepage: 10        #this value will not be accessible in template until it will not be defined as global variable in config/packages/twig.yaml
+    max_jobs_on_homepage: 20        #this value will not be accessible in template until it will not be defined as global variable in config/packages/twig.yaml
 
 services:
     # default configuration for services in *this* file
