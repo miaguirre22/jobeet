@@ -37,7 +37,7 @@ VALIDAR ESQUEMA DE LA DATABASE CON DOCTRINE
 
 INSTALAR PAQUETE DE MIGRACION DE DOCTRINE
 
-	composer require doctrine/doctrine-migrations-bundle
+	composer require --dev doctrine/doctrine-migrations-bundle
 
 MIGRAR DATOS DE ENTITIES Y FIXTURES A LA DATABASE
 
