@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Job;
+use App\Entity\Category;
 use Doctrine\ORM\AbstractQuery;
 
 class JobRepository extends EntityRepository

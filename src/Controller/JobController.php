@@ -27,7 +27,7 @@ class JobController extends AbstractController
      */
     public function list(EntityManagerInterface $em) : Response
     {
-        
+        /*
         $query = $em->createQuery(
             'SELECT j FROM App:Job j WHERE j.expiresAt > :date'
         )->setParameter('date', new \DateTime());
@@ -35,12 +35,12 @@ class JobController extends AbstractController
         $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
         
 
-       /* $jobs = $em->getRepository(Job::class)->findActiveJobs();*/
+        $jobs = $em->getRepository(Job::class)->findActiveJobs();*/
 
-       /**$categories = $em->getRepository(Category::class)->findWithActiveJobs();
-        */
+        $categories = $em->getRepository(Category::class)->findWithActiveJobs();
+    
         return $this->render('job/list.html.twig', [
-            'categories' => $categories,
+            'categories' => $categories
         ]);
     }
 
@@ -61,7 +61,7 @@ class JobController extends AbstractController
     public function show(Job $job) : Response
     {
         return $this->render('job/show.html.twig', [
-            'job' => $job,
+            'job' => $job
         ]);
     }
 

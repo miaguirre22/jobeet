@@ -64,7 +64,7 @@ class JobFixtures extends Fixture implements OrderedFixtureInterface
         $jobExpired->setEmail('job@example.com');
         $jobExpired->setExpiresAt(new \DateTime('-10 days'));
 
-        /*
+        
         for ($i = 100; $i <= 130; $i++) {
             $job = new Job();
             $job->setCategory($manager->merge($this->getReference('category-programming')));
@@ -81,7 +81,7 @@ class JobFixtures extends Fixture implements OrderedFixtureInterface
 
             $manager->persist($job);
         }
-        */
+        
         
         $manager->persist($jobSensioLabs);
         $manager->persist($jobExtremeSensio);
