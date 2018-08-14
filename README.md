@@ -3,7 +3,7 @@ REPO GitHub: https://github.com/frdepiaggio/jobeet.git Despues de Clonar:
 
 INSTALAR DOCKER CE INSTALAR DOCKER COMPOSE
 
-	Comandos: INICIAR DOCKER POR PRIMERA VEZ
+Comandos: INICIAR DOCKER POR PRIMERA VEZ
 
 	sudo docker-compose up -d
 
@@ -22,7 +22,7 @@ CREAR EL PROYECTO SYMFONY
 	exit;
 	sudo chown -R $USER:$USER .
 
-CONFIGURAR LA DATABASE En el .env poner:
+CONFIGURAR LA DATABASE En el archivo: .env poner:
 
 	DATABASE_URL=mysql://user:password@mysql:3306/jobeet
 	composer require knplabs/knp-paginator-bundle
@@ -37,7 +37,7 @@ VALIDAR ESQUEMA DE LA DATABASE CON DOCTRINE
 
 INSTALAR PAQUETE DE MIGRACION DE DOCTRINE
 
-	composer require doctrine/doctrine-migrations-bundle
+	composer require --dev doctrine/doctrine-migrations-bundle
 
 MIGRAR DATOS DE ENTITIES Y FIXTURES A LA DATABASE
 
