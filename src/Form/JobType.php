@@ -27,10 +27,28 @@ class JobType extends AbstractType
             ->add('location', TextType::class)
             ->add('description', TextareaType::class)
             ->add('howToApply', TextType::class)
-            ->add('public', TextType::class)
-            ->add('activated', TextType::class)
+        #    ->add('public', TextType::class)
+            ->add('public', ChoiceType::class, [
+                'choices'   => [
+                    'Yes' => true,
+                    'No' => false,
+                ],
+                'label' => 'Public?',
+            ])
+        #    ->add('activated', TextType::class)
+            ->add('activated', ChoiceType::class, [
+                'choices'   => [
+                    'Yes' => true,
+                    'No' => false,
+                ],
+                'label' => 'Public?',
+            ])
             ->add('email', EmailType::class)
-            ->add('category', TextType::class)
+        #    ->add('category', TextType::class)
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+            ])
             ->add('token', TextType::class);
 
     }
