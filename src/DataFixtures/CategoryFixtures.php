@@ -48,4 +48,4 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     {
         return 1;
     }
-}
+}   
