@@ -10,6 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class JobType extends AbstractType
 {
@@ -30,7 +33,10 @@ class JobType extends AbstractType
             ->add('position', TextType::class)
             ->add('location', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('howToApply', TextType::class)
+        #    ->add('howToApply', TextType::class)
+            ->add('howToApply', TextType::class, [
+                'label' => 'How to apply?',
+            ])
         #    ->add('public', TextType::class)
             ->add('public', ChoiceType::class, [
                 'choices'   => [
@@ -45,7 +51,7 @@ class JobType extends AbstractType
                     'Yes' => true,
                     'No' => false,
                 ],
-                'label' => 'Public?',
+                'label' => 'Activeted?',    # talvez no va esta linea
             ])
             ->add('email', EmailType::class)
         #    ->add('category', TextType::class)

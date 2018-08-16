@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Reposity\CategoryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;    #para cuando modifique la funcion 'show'
+use App\Form\JobType;
 
 class JobController extends AbstractController
 {
