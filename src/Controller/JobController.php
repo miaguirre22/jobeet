@@ -22,7 +22,9 @@ class JobController extends AbstractController
 	/**
      * Lists all job entities.
      *
-     * @Route("/", name="job.list", methods="GET")
+     * @Route("/", 
+     *      name="job.list", 
+     *      methods="GET")
      *
      * @return Response
      */
@@ -63,6 +65,25 @@ class JobController extends AbstractController
     {
         return $this->render('job/show.html.twig', [
             'job' => $job
+        ]);
+    }
+
+    /**
+     * Creates a new job entity.
+     *
+     * @Route("/job/create", 
+     *      name="job.create", 
+     *      methods="GET")
+     *
+     * @return Response
+     */
+    public function create() : Response
+    {
+        $job = new Job();
+        $form = $this->createForm(JobType::class, $job);
+    
+        return $this->render('job/create.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
