@@ -9,17 +9,18 @@ use Doctrine\ORM\AbstractQuery;
 
 class JobRepository extends EntityRepository
 {
-	/**
-     * @param int $id
+    /**
+     * @param int|null $categoryId
      *
-     * @return Job|null
+     * @return Job[]
      */
-    public function findActiveJobs(int $id)
+    public function findActiveJobs(int $categoryId = null)
     {
-        /*
         $qb = $this->createQueryBuilder('j')
             ->where('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->orderBy('j.expiresAt', 'DESC');
 
         if ($categoryId) {
@@ -28,15 +29,26 @@ class JobRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getResult();
-        */
+    }
 
+    /**
+     * @param int $id
+     *
+     * @throws NonUniqueResultException
+     *
+     * @return Job|null
+     */
+    public function findActiveJob(int $id) : ?Job
+    {
         return $this->createQueryBuilder('j')
-        ->where('j.id = :id')
-        ->andWhere('j.expiresAt > :date')
-        ->setParameter('id', $id)
-        ->setParameter('date', new \DateTime())
-        ->getQuery()
-        ->getOneOrNullResult();
+            ->where('j.id = :id')
+            ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
+            ->setParameter('id', $id)
+            ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
