@@ -1,23 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: martin
- * Date: 06/07/18
- * Time: 12:59
- */
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Job;
 use App\Entity\Category;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Reposity\CategoryRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;    #para cuando modifique la funcion 'show'
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use App\Form\JobType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormInterface;
 
-class JobController extends AbstractController
+use App\Reposity\CategoryRepository;
+
+class JobController extends Controller  // AbstractController
 {
 	/**
      * Lists all job entities.
@@ -30,16 +30,6 @@ class JobController extends AbstractController
      */
     public function list(EntityManagerInterface $em) : Response
     {
-        /*
-        $query = $em->createQuery(
-            'SELECT j FROM App:Job j WHERE j.expiresAt > :date'
-        )->setParameter('date', new \DateTime());
-        
-        $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
-        
-
-        $jobs = $em->getRepository(Job::class)->findActiveJobs();*/
-
         $categories = $em->getRepository(Category::class)->findWithActiveJobs();
     
         return $this->render('job/list.html.twig', [
@@ -73,19 +63,28 @@ class JobController extends AbstractController
      *
      * @Route("/job/create", 
      *      name="job.create", 
-     *      methods="GET")
+     *      methods={"GET", "POST"})
      *
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return RedirectResponse|Response
      */
-    public function create(Request $request, EntityManagerInterface $em) : Response
+    public function create(Request $request, EntityManagerInterface $em, FileUploader $fileUploader) : Response
     {
         $job = new Job();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile|null $logoFile */
+            $logoFile = $form->get('logo')->getData();
+
+            if ($logoFile instanceof UploadedFile) {
+                $fileName = $fileName->upload($logoFile);
+
+                $job->setLogo($fileName);
+            }
+
             $em->persist($job);
             $em->flush();
 
@@ -97,4 +96,30 @@ class JobController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit existing job entity
+     *
+     * @Route("/job/{token}/edit", name="job.edit", methods={"GET", "POST"}, requirements={"token" = "\w+"})
+     *
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function edit(Request $request, Job $job, EntityManagerInterface $em) : Response
+    {
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('job.list');
+        }
+
+        return $this->render('job/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

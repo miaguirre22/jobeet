@@ -197,7 +197,7 @@ class Job
     }
 
     /**
-     * @return string|null
+     * @return string|null|UploadedFile
      */
     public function getLogo() : ?string
     {
@@ -205,11 +205,11 @@ class Job
     }
 
     /**
-     * @param string|null $logo
+     * @param string|null|UploadedFile $logo
      *
      * @return self
      */
-    public function setLogo(?string $logo) : self
+    public function setLogo($logo) : self
     {
         $this->logo = $logo;
 
