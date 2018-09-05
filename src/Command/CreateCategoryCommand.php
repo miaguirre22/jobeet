@@ -4,6 +4,7 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 
 class CreateCategoryCommand extends Command
 {
@@ -18,7 +19,10 @@ class CreateCategoryCommand extends Command
 
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('This command allows you to add new category in db...');
+            ->setHelp('This command allows you to add new category in db...')
+
+                        // configure an argument
+            ->addArgument('name', InputArgument::REQUIRED, 'The name of the category.');
     }
 
     /**
@@ -40,5 +44,8 @@ class CreateCategoryCommand extends Command
         // outputs a message without adding a "\n" at the end of the line
         $output->write('You are about to ');
         $output->write('create a category.');
+
+        // retrieve the argument value using getArgument()
+        $output->writeln(sprintf('Name: %s', $input->getArgument('name')));
     }
 }
