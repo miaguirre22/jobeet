@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use App\Service\CategoryService;
+use Symfony\Component\Console\Question\Question;
 
 class CreateCategoryCommand extends Command
 {
@@ -57,13 +58,34 @@ class CreateCategoryCommand extends Command
 
         // outputs a message without adding a "\n" at the end of the line
         $output->write('You are about to ');
-        $output->write('create a category.');
+        $output->writeln('create a category.');
 
         // retrieve the argument value using getArgument()
-        $output->writeln(sprintf('Name: %s', $input->getArgument('name')));
+        $output->writeln(sprintf('Category Name: %s', $input->getArgument('name')));
 
         $this->categoryService->create($input->getArgument('name'));
 
         $output->writeln('Category successfully created!');
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        if (!$input->getArgument('name')) {
+            $question = new Question('Please choose a name: ');
+            $question->setValidator(function ($name) {
+                if (empty($name)) {
+                    throw new \Exception('Name can not be empty');
+                }
+                
+                return $name;
+            });
+
+            $answer = $this->getHelper('question')->ask($input, $output, $question);
+            $input->setArgument('name', $answer);
+        }
     }
 }
