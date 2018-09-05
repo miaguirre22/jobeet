@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormInterface;
 use App\Reposity\CategoryRepository;
 
 
-class JobController extends AbstractController
+class JobController extends Controller  // AbstractController
 {
 	/**
      * Lists all job entities.
@@ -102,7 +102,11 @@ class JobController extends AbstractController
     /**
      * Edit existing job entity
      *
-     * @Route("/job/{token}/edit", name="job.edit", methods={"GET", "POST"}, requirements={"token" = "\w+"})
+     * @Route(
+     *      "/job/{token}/edit", 
+     *      name="job.edit", 
+     *      methods={"GET", "POST"}, 
+     *      requirements={"token" = "\w+"})
      *
      * @param Request $request
      * @param Job $job

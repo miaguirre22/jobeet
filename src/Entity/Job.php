@@ -199,7 +199,7 @@ class Job
     /**
      * @return string|null|UploadedFile
      */
-    public function getLogo() : ?string
+    public function getLogo()
     {
         return $this->logo;
     }
